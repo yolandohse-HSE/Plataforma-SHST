@@ -14,7 +14,13 @@ interface Contractor {
   status: "Ativa" | "Inativa" | "Suspensa";
   documents: string[];
 }
-
+interface FormData {
+  name: string;
+  nif: string;
+  contact: string;
+  email: string;
+  status: "Ativa" | "Inativa" | "Suspensa";
+}
 export default function ContratadasPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -53,14 +59,13 @@ export default function ContratadasPage() {
 
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] =  useState<FormData>({
     name: "",
     nif: "",
     contact: "",
     email: "",
-    status: "Ativa" as const,
+    status: "Ativa"
   });
-
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push("/login");

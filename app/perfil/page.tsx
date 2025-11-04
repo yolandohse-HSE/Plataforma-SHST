@@ -24,7 +24,7 @@ export default function PerfilPage() {
         email: session.user.email || "",
         phone: "",
         company: "",
-        role: session.user.role || "",
+        role: session.user?.name || "Utilizador",
       });
     }
   }, [status, session, router]);

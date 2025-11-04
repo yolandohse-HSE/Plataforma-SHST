@@ -16,7 +16,14 @@ interface ComplianceItem {
   responsible?: string;
   lastUpdated?: string;
 }
-
+interface FormData {
+  requirement: string;
+  description: string;
+  status: "Conforme" | "Não Conforme" | "Em Progresso";
+  evidence: string;
+  dueDate: string;
+  responsible: string;
+}
 export default function ConformidadePage() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -53,10 +60,10 @@ export default function ConformidadePage() {
 
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({  
     requirement: "",
     description: "",
-    status: "Em Progresso" as const,
+    status: "Em Progresso",
     evidence: "",
     dueDate: "",
     responsible: "",
@@ -119,7 +126,7 @@ export default function ConformidadePage() {
             ? {
                 ...item,
                 ...formData,
-                evidenceFile: selectedFile,
+                evidenceFile: selectedFile || undefined,
                 lastUpdated: new Date().toISOString().split("T")[0],
               }
             : item
@@ -131,7 +138,7 @@ export default function ConformidadePage() {
         {
           id: Date.now().toString(),
           ...formData,
-          evidenceFile: selectedFile,
+          evidenceFile: selectedFile || undefined,
           lastUpdated: new Date().toISOString().split("T")[0],
         },
       ]);
